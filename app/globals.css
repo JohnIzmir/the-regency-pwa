@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: 30 25% 5%;
-  --foreground: 40 35% 90%;
-  --border: 30 15% 20%;
-  --input: 30 15% 18%;
-  --ring: 40 45% 55%;
+  --background: 28 30% 8%;
+  --foreground: 38 45% 92%;
+  --border: 28 25% 25%;
+  --input: 28 25% 22%;
+  --ring: 38 55% 60%;
 }
 
 * {
@@ -15,8 +15,8 @@
 }
 
 body {
-  background-color: #14100d;
-  color: #f2e8d8;
+  background-color: #1c130d;
+  color: #f6ead9;
 }
 
 @media (prefers-reduced-motion: reduce) {

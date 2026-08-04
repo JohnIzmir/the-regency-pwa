@@ -26,17 +26,17 @@ export async function GET(_request: Request, { params }: { params: { id: string 
           flexDirection: 'column',
           justifyContent: 'flex-end',
           padding: 64,
-          background: 'linear-gradient(135deg, #14100d 0%, #1f3d2e 100%)',
-          color: '#f2e8d8',
+          background: 'linear-gradient(135deg, #1c130d 0%, #24402f 100%)',
+          color: '#f6ead9',
           fontFamily: 'Georgia, serif',
         }}
       >
-        <div style={{ display: 'flex', fontSize: 28, color: '#c9a15a', letterSpacing: 4, textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', fontSize: 28, color: '#d1a25c', letterSpacing: 4, textTransform: 'uppercase' }}>
           The Regency
         </div>
         <div style={{ display: 'flex', fontSize: 64, fontWeight: 700, marginTop: 16, maxWidth: 900 }}>{title}</div>
         {dateLabel && (
-          <div style={{ display: 'flex', fontSize: 32, marginTop: 24, color: '#a89a86' }}>{dateLabel}</div>
+          <div style={{ display: 'flex', fontSize: 32, marginTop: 24, color: '#b7a58d' }}>{dateLabel}</div>
         )}
       </div>
     ),

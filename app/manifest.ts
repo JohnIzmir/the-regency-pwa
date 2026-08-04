@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Live bands, singers, karaoke, quiz nights and sports screenings at The Regency, Weston-super-Mare.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#14100d',
-    theme_color: '#14100d',
+    background_color: '#1c130d',
+    theme_color: '#1c130d',
     orientation: 'portrait-primary',
     icons: [
       { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },

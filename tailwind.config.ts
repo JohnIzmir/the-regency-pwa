@@ -8,30 +8,30 @@ const config: Config = {
       colors: {
         // Premium British pub palette — dark wood, aged gold, deep green
         pub: {
-          bg: '#14100d',          // near-black walnut
-          surface: '#1f1812',     // card / panel background
-          surface2: '#2a2019',    // raised surface (hover, inputs)
-          wood: '#4a3222',        // oak wood accent
-          'wood-light': '#6b4a30',
-          gold: '#c9a15a',        // primary accent — brass/gold
-          'gold-light': '#e0c284',
-          'gold-dark': '#a17f3d',
-          green: '#1f3d2e',       // deep pub green
-          'green-light': '#2f5a44',
-          cream: '#f2e8d8',       // primary text on dark
-          muted: '#a89a86',
+          bg: '#1c130d',          // warm dark walnut (was near-black)
+          surface: '#271b13',     // card / panel background
+          surface2: '#362419',    // raised surface (hover, inputs)
+          wood: '#5c3b23',        // oak wood accent
+          'wood-light': '#7e5636',
+          gold: '#d1a25c',        // primary accent — brass/gold, warmed up
+          'gold-light': '#e8c687',
+          'gold-dark': '#ab8142',
+          green: '#24402f',       // deep pub green
+          'green-light': '#33604a',
+          cream: '#f6ead9',       // primary text on dark
+          muted: '#b7a58d',
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        primary: { DEFAULT: '#c9a15a', foreground: '#14100d' },
-        secondary: { DEFAULT: '#1f3d2e', foreground: '#f2e8d8' },
-        destructive: { DEFAULT: '#8c3a2b', foreground: '#f2e8d8' },
-        muted: { DEFAULT: '#2a2019', foreground: '#a89a86' },
-        accent: { DEFAULT: '#2a2019', foreground: '#f2e8d8' },
-        card: { DEFAULT: '#1f1812', foreground: '#f2e8d8' },
+        primary: { DEFAULT: '#d1a25c', foreground: '#1c130d' },
+        secondary: { DEFAULT: '#24402f', foreground: '#f6ead9' },
+        destructive: { DEFAULT: '#8c3a2b', foreground: '#f6ead9' },
+        muted: { DEFAULT: '#362419', foreground: '#b7a58d' },
+        accent: { DEFAULT: '#362419', foreground: '#f6ead9' },
+        card: { DEFAULT: '#271b13', foreground: '#f6ead9' },
       },
       fontFamily: {
         display: ['var(--font-playfair)', 'Georgia', 'serif'],
