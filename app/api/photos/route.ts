@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   const supabase = createClient();
   let query = supabase
     .from('photos')
-    .select('id, thumbnail_path, caption, uploaded_at, profiles(full_name)')
+    .select('id, thumbnail_path, caption, uploaded_at, profiles!uploader_id(full_name)')
     .eq('status', 'approved')
     .limit(PAGE_SIZE);
 

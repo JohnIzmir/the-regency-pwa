@@ -7,7 +7,7 @@ export default async function AdminGalleryPage() {
   const supabase = createClient();
   const { data: photos } = await supabase
     .from('photos')
-    .select('id, thumbnail_path, caption, uploaded_at, profiles(full_name)')
+    .select('id, thumbnail_path, caption, uploaded_at, profiles!uploader_id(full_name)')
     .eq('status', 'pending')
     .order('uploaded_at', { ascending: true });
 

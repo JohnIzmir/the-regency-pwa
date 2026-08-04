@@ -16,7 +16,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: { so
 
   const { data: photos } = await supabase
     .from('photos')
-    .select('id, thumbnail_path, caption, uploaded_at, profiles(full_name)')
+    .select('id, thumbnail_path, caption, uploaded_at, profiles!uploader_id(full_name)')
     .eq('status', 'approved')
     .order('uploaded_at', { ascending: false })
     .limit(PAGE_SIZE);
