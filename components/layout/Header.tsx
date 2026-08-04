@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { LogOut } from 'lucide-react';
 import { getSessionProfile } from '@/lib/auth/session';
+import { signOut } from '@/lib/actions/auth';
 import { buttonVariants } from '@/components/ui/button';
 
 const NAV_LINKS = [
@@ -26,11 +28,23 @@ export async function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {profile ? (
-            <Link href="/profile" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-              {profile.full_name.split(' ')[0]}
-            </Link>
+            <>
+              <Link href="/profile" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
+                {profile.full_name.split(' ')[0]}
+              </Link>
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut className="h-4 w-4" />
+                </button>
+              </form>
+            </>
           ) : (
             <Link href="/login" className={buttonVariants({ size: 'sm' })}>
               Sign in
