@@ -120,7 +120,7 @@ export default async function HomePage() {
         <h2 className="mb-8 font-display text-3xl font-bold text-pub-cream">Inside The Regency</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
-            { src: '/images/bar-pumps-row.jpg', alt: 'Hand pumps at the bar' },
+            { src: '/images/tap-closeup.jpg', alt: 'Close-up of a hand pump at the bar' },
             { src: '/images/free-beer-tomorrow.jpg', alt: "'Free beer tomorrow' sign above the bar" },
             { src: '/images/games-area.jpg', alt: 'Games area' },
             { src: '/images/pool-table.jpg', alt: 'Pool table room' },
