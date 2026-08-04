@@ -4,6 +4,7 @@ import { createClient, createServiceRoleClient } from '@/lib/supabase/server';
 import { buttonVariants } from '@/components/ui/button';
 import { EventCard } from '@/components/entertainment/EventCard';
 import { GoogleMap } from '@/components/shared/GoogleMap';
+import { TrustBadges } from '@/components/shared/TrustBadges';
 
 const DAY_LABELS: Record<string, string> = {
   mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
@@ -58,15 +59,15 @@ export default async function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-pub-bg/70 via-pub-bg/60 to-pub-bg" />
         <div className="relative flex flex-col items-center gap-6">
-          <p className="font-display text-sm uppercase tracking-[0.3em] text-pub-gold">
+          <h1 className="max-w-3xl font-display text-6xl font-bold tracking-wide text-pub-gold-light drop-shadow-lg sm:text-7xl">
+            The Regency
+          </h1>
+          <p className="font-display text-sm uppercase tracking-[0.3em] text-pub-cream/80">
             {fullAddress}
           </p>
-          <h1 className="max-w-3xl font-display text-5xl font-bold text-pub-cream drop-shadow-lg sm:text-6xl">
-            Live entertainment, every week
-          </h1>
-          <p className="max-w-xl text-pub-cream/90 drop-shadow">
-            Live bands, singers, karaoke, quiz nights, theme nights and sports screenings — The Regency
-            is Weston-super-Mare&apos;s home for a proper night out.
+          <p className="max-w-xl text-lg text-pub-cream/90 drop-shadow">
+            Live bands, singers, karaoke, quiz nights, theme nights and sports screenings — Weston-super-Mare&apos;s
+            home for a proper night out, every week.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/entertainment" className={buttonVariants({ size: 'lg' })}>
@@ -78,6 +79,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <TrustBadges />
 
       {/* Upcoming entertainment */}
       <section className="mx-auto max-w-6xl px-4 py-16">

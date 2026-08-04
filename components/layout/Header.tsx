@@ -5,6 +5,7 @@ import { signOut } from '@/lib/actions/auth';
 import { buttonVariants } from '@/components/ui/button';
 
 const NAV_LINKS = [
+  { href: '/', label: 'Home' },
   { href: '/entertainment', label: "What's On" },
   { href: '/gallery', label: 'Gallery' },
   { href: '/contact', label: 'Contact' },
@@ -16,7 +17,7 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-pub-wood-light/30 bg-pub-bg/95 backdrop-blur supports-[backdrop-filter]:bg-pub-bg/80">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="font-display text-lg font-bold text-pub-gold-light">
+        <Link href="/" className="font-display text-2xl font-bold tracking-wide text-pub-gold-light">
           The Regency
         </Link>
 

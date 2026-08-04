@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard, CalendarDays, Images, Users, ScrollText, LogOut,
+  LayoutDashboard, CalendarDays, Images, Users, ScrollText, LogOut, Home,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { signOut } from '@/lib/actions/auth';
@@ -48,6 +48,13 @@ export function AdminNav({ userRole }: { userRole: string }) {
         </ul>
       </div>
       <div className="space-y-2">
+        <Link
+          href="/"
+          className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-pub-cream hover:bg-pub-surface2"
+        >
+          <Home className="h-4 w-4" />
+          View live site
+        </Link>
         <p className="px-3 text-xs uppercase tracking-wide text-pub-muted">Signed in as {userRole}</p>
         <form action={signOut}>
           <button
