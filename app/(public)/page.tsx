@@ -62,6 +62,9 @@ export default async function HomePage() {
           <h1 className="max-w-3xl font-display text-6xl font-bold tracking-wide text-pub-gold-light drop-shadow-lg sm:text-7xl">
             The Regency
           </h1>
+          <p className="font-display text-xl italic text-pub-gold drop-shadow">
+            A proper local.
+          </p>
           <p className="font-display text-sm uppercase tracking-[0.3em] text-pub-cream/80">
             {fullAddress}
           </p>
