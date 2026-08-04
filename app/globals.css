@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 30 25% 5%;
+  --foreground: 40 35% 90%;
+  --border: 30 15% 20%;
+  --input: 30 15% 18%;
+  --ring: 40 45% 55%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: #14100d;
+  color: #f2e8d8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.focus-ring {
+  @apply outline-none ring-2 ring-pub-gold ring-offset-2 ring-offset-pub-bg;
+}
+
+@media (max-width: 639px) {
+  body {
+    padding-bottom: 4.5rem;
+  }
+}
