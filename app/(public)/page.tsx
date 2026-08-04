@@ -63,7 +63,7 @@ export default async function HomePage() {
             The Regency
           </h1>
           <p className="font-display text-xl italic text-pub-gold drop-shadow">
-            A proper local.
+            A proper local, proper beer!
           </p>
           <p className="font-display text-sm uppercase tracking-[0.3em] text-pub-cream/80">
             {fullAddress}
