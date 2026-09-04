@@ -60,7 +60,7 @@ export function EventForm({
     ticketPrice: defaultValues?.ticketPrice ?? '',
     isFreeEntry: defaultValues?.isFreeEntry ?? true,
     isFeatured: defaultValues?.isFeatured ?? false,
-    status: defaultValues?.status ?? 'draft',
+    status: defaultValues?.status ?? 'published',
     notifySubscribers: defaultValues?.notifySubscribers ?? true,
   });
 
@@ -205,8 +205,8 @@ export function EventForm({
       <div>
         <Label htmlFor="status">Status</Label>
         <Select id="status" value={form.status} onChange={(e) => set('status', e.target.value as FormState['status'])}>
+          <option value="published">Published (visible to customers)</option>
           <option value="draft">Draft (preview only, not public)</option>
-          <option value="published">Published</option>
           <option value="cancelled">Cancelled</option>
           <option value="archived">Archived</option>
         </Select>

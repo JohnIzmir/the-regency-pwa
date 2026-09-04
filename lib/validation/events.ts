@@ -31,7 +31,7 @@ export const EventObjectSchema = z.object({
     .nullable(),
   isFreeEntry: z.boolean().default(true),
   isFeatured: z.boolean().default(false),
-  status: z.enum(['draft', 'published', 'cancelled', 'archived']).default('draft'),
+  status: z.enum(['draft', 'published', 'cancelled', 'archived']).default('published'),
   notifySubscribers: z.boolean().default(true),
 });
 
