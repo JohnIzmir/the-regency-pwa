@@ -63,7 +63,7 @@ export async function createEvent(input: EventInput): Promise<ActionResult<{ id:
   }
 
   if (parsed.data.status === 'published' && parsed.data.notifySubscribers) {
-    void triggerPushNotification(data.id, 'new_event');
+    await triggerPushNotification(data.id, 'new_event');
   }
 
   revalidatePath('/admin/events');
@@ -202,18 +202,18 @@ export async function updateEvent(id: string, input: Partial<EventInput>): Promi
 
   if (notifyEnabled && before) {
     if (newStatus === 'cancelled' && before.status !== 'cancelled') {
-      void triggerPushNotification(id, 'event_cancelled');
+      await triggerPushNotification(id, 'event_cancelled');
     } else if (newStatus === 'published' && before.status !== 'published') {
-      void triggerPushNotification(id, 'new_event');
+      await triggerPushNotification(id, 'new_event');
     } else if (
       newStatus === 'published' &&
       before.status === 'published' &&
       parsed.data.startsAt !== undefined &&
       parsed.data.startsAt !== before.starts_at
     ) {
-      void triggerPushNotification(id, 'event_changed');
+      await triggerPushNotification(id, 'event_changed');
     } else if (newStatus === 'published' && parsed.data.isFeatured === true) {
-      void triggerPushNotification(id, 'featured_event');
+      await triggerPushNotification(id, 'featured_event');
     }
   }
 
