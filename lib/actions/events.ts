@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/auth/session';
 import { EventSchema, EventObjectSchema, RecurrenceRuleSchema, type EventInput, type RecurrenceRuleInput } from '@/lib/validation/events';
 import { slugify } from '@/lib/utils';
+import { triggerPushNotification } from '@/lib/notifications/sendPush';
 
 type ActionResult<T = undefined> =
   | { success: true; data: T }
@@ -59,6 +60,10 @@ export async function createEvent(input: EventInput): Promise<ActionResult<{ id:
 
   if (error || !data) {
     return { success: false, error: 'Could not create event. Check the details and try again.' };
+  }
+
+  if (parsed.data.status === 'published' && parsed.data.notifySubscribers) {
+    void triggerPushNotification(data.id, 'new_event');
   }
 
   revalidatePath('/admin/events');
@@ -162,6 +167,15 @@ export async function updateEvent(id: string, input: Partial<EventInput>): Promi
   }
 
   const supabase = createClient();
+
+  // Fetch the pre-update state so we can tell what actually changed —
+  // needed to decide whether (and what) to notify subscribers about below.
+  const { data: before } = await supabase
+    .from('events')
+    .select('status, starts_at, notify_subscribers')
+    .eq('id', id)
+    .single();
+
   const updates: Record<string, unknown> = { updated_by: admin.id };
   if (parsed.data.title !== undefined) updates.title = parsed.data.title;
   if (parsed.data.description !== undefined) updates.description = parsed.data.description;
@@ -176,14 +190,31 @@ export async function updateEvent(id: string, input: Partial<EventInput>): Promi
   if (parsed.data.status !== undefined) updates.status = parsed.data.status;
   if (parsed.data.notifySubscribers !== undefined) updates.notify_subscribers = parsed.data.notifySubscribers;
 
-  // NOTE: when status becomes 'cancelled' or key fields (starts_at, status)
-  // change on a published, notify_subscribers=true event, Stage 3 wires
-  // this up to enqueue push/email notifications via the `send-push` Edge
-  // Function. Left as a deliberate seam here, not implemented yet.
-
   const { error } = await supabase.from('events').update(updates).eq('id', id);
   if (error) {
     return { success: false, error: 'Could not update event.' };
+  }
+
+  // Notify subscribers about whatever actually changed, provided this
+  // event (before and/or after the edit) has notifications switched on.
+  const notifyEnabled = (parsed.data.notifySubscribers ?? before?.notify_subscribers) === true;
+  const newStatus = parsed.data.status ?? before?.status;
+
+  if (notifyEnabled && before) {
+    if (newStatus === 'cancelled' && before.status !== 'cancelled') {
+      void triggerPushNotification(id, 'event_cancelled');
+    } else if (newStatus === 'published' && before.status !== 'published') {
+      void triggerPushNotification(id, 'new_event');
+    } else if (
+      newStatus === 'published' &&
+      before.status === 'published' &&
+      parsed.data.startsAt !== undefined &&
+      parsed.data.startsAt !== before.starts_at
+    ) {
+      void triggerPushNotification(id, 'event_changed');
+    } else if (newStatus === 'published' && parsed.data.isFeatured === true) {
+      void triggerPushNotification(id, 'featured_event');
+    }
   }
 
   revalidatePath('/admin/events');
