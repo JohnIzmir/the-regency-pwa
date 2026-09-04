@@ -41,10 +41,10 @@ create table venue_info (
   longitude     numeric(9,6),
   -- {"mon":{"open":"11:00","close":"23:30"}, "tue": {...}, ... } — same hours every day currently
   opening_hours jsonb not null default
-    '{"mon":{"open":"11:00","close":"23:30"},"tue":{"open":"11:00","close":"23:30"},
-      "wed":{"open":"11:00","close":"23:30"},"thu":{"open":"11:00","close":"23:30"},
-      "fri":{"open":"11:00","close":"23:59"},"sat":{"open":"11:00","close":"23:59"},
-      "sun":{"open":"11:00","close":"23:30"}}'::jsonb,
+    '{"mon":{"open":"11:00","close":"23:00"},"tue":{"open":"11:00","close":"23:00"},
+      "wed":{"open":"11:00","close":"23:00"},"thu":{"open":"11:00","close":"23:00"},
+      "fri":{"open":"11:00","close":"00:00"},"sat":{"open":"11:00","close":"00:00"},
+      "sun":{"open":"11:00","close":"23:00"}}'::jsonb,
   facebook_url  text,
   instagram_url text,
   updated_at    timestamptz not null default now()

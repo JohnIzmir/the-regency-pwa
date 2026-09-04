@@ -5,15 +5,11 @@ import { GoogleMap } from '@/components/shared/GoogleMap';
 import { TrustBadges } from '@/components/shared/TrustBadges';
 import { Card, CardContent } from '@/components/ui/card';
 import { buttonVariants } from '@/components/ui/button';
+import { orderedHours } from '@/lib/openingHours';
 
 export const metadata: Metadata = {
   title: 'Contact & Opening Hours | The Regency',
   description: 'Find The Regency at 22-24 Lower Church Road, Weston-super-Mare. Opening hours, phone number, and directions.',
-};
-
-const DAY_LABELS: Record<string, string> = {
-  mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
-  fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
 };
 
 export const revalidate = 3600;
@@ -49,11 +45,11 @@ export default async function ContactPage() {
             <div className="flex items-start gap-3">
               <Clock className="mt-0.5 h-5 w-5 shrink-0 text-pub-gold" />
               <dl className="space-y-0.5 text-sm text-pub-muted">
-                {Object.entries(venue?.opening_hours ?? {}).map(([day, hours]) => (
+                {orderedHours(venue?.opening_hours).map(({ day, label, hours }) => (
                   <div key={day} className="flex justify-between gap-6">
-                    <dt>{DAY_LABELS[day] ?? day}</dt>
+                    <dt>{label}</dt>
                     <dd>
-                      {(hours as { open: string; close: string }).open} – {(hours as { open: string; close: string }).close}
+                      {hours.open} – {hours.close}
                     </dd>
                   </div>
                 ))}

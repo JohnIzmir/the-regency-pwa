@@ -2,11 +2,7 @@ import Link from 'next/link';
 import { Facebook, Instagram, Phone, MapPin, Star } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { getReviewUrl } from '@/lib/reviewUrl';
-
-const DAY_LABELS: Record<string, string> = {
-  mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
-  fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
-};
+import { orderedHours } from '@/lib/openingHours';
 
 export async function Footer() {
   const supabase = createClient();
@@ -34,11 +30,11 @@ export async function Footer() {
         <div>
           <h3 className="font-display text-lg font-semibold text-pub-gold-light">Opening hours</h3>
           <dl className="mt-2 space-y-1 text-sm text-pub-muted">
-            {Object.entries(venue?.opening_hours ?? {}).map(([day, hours]) => (
+            {orderedHours(venue?.opening_hours).map(({ day, label, hours }) => (
               <div key={day} className="flex justify-between gap-4">
-                <dt>{DAY_LABELS[day] ?? day}</dt>
+                <dt>{label}</dt>
                 <dd>
-                  {(hours as { open: string; close: string }).open} – {(hours as { open: string; close: string }).close}
+                  {hours.open} – {hours.close}
                 </dd>
               </div>
             ))}

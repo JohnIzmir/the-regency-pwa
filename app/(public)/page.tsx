@@ -6,11 +6,7 @@ import { EventCard } from '@/components/entertainment/EventCard';
 import { GoogleMap } from '@/components/shared/GoogleMap';
 import { TrustBadges } from '@/components/shared/TrustBadges';
 import { getReviewUrl } from '@/lib/reviewUrl';
-
-const DAY_LABELS: Record<string, string> = {
-  mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
-  fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
-};
+import { orderedHours } from '@/lib/openingHours';
 
 export const revalidate = 60;
 
@@ -170,11 +166,11 @@ export default async function HomePage() {
         <div>
           <h2 className="mb-4 font-display text-2xl font-bold text-pub-cream">Opening Hours</h2>
           <dl className="space-y-1 text-pub-muted">
-            {Object.entries(venue?.opening_hours ?? {}).map(([day, hours]) => (
+            {orderedHours(venue?.opening_hours).map(({ day, label, hours }) => (
               <div key={day} className="flex justify-between border-b border-pub-wood-light/20 py-1.5 text-sm">
-                <dt>{DAY_LABELS[day] ?? day}</dt>
+                <dt>{label}</dt>
                 <dd>
-                  {(hours as { open: string; close: string }).open} – {(hours as { open: string; close: string }).close}
+                  {hours.open} – {hours.close}
                 </dd>
               </div>
             ))}
