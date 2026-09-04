@@ -9,18 +9,29 @@
    - `supabase/migrations/0003_view_count_rpc.sql`
    Or via CLI: `supabase link --project-ref <ref>` then `supabase db push`.
 3. Enable `pg_cron` and `pg_net`: Database → Extensions → enable both.
-4. Schedule the two cron jobs (SQL editor), replacing `<project-ref>` and `<service-role-key>`:
+4. Schedule the two cron jobs (SQL editor), replacing `<project-ref>`, `<anon-key>` and `<FUNCTION_SECRET>`.
+   Note the `apikey`/`Authorization` headers below are required — Supabase's own gateway rejects any
+   Edge Function call that's missing them (401 "Missing authorization header") before the function's
+   own `x-webhook-secret` check ever runs. The anon key is safe to use here; it's already public.
    ```sql
    select cron.schedule('archive-expired-events', '0 3 * * *', $$select archive_expired_events()$$);
    select cron.schedule('weekly-monday-digest', '0 8 * * 1', $$
      select net.http_post(
        url := 'https://<project-ref>.supabase.co/functions/v1/weekly-digest',
-       headers := jsonb_build_object('x-webhook-secret', '<FUNCTION_SECRET>')
+       headers := jsonb_build_object(
+         'x-webhook-secret', '<FUNCTION_SECRET>',
+         'apikey', '<anon-key>',
+         'Authorization', 'Bearer <anon-key>'
+       )
      )$$);
    select cron.schedule('daily-digest', '0 8 * * *', $$
      select net.http_post(
        url := 'https://<project-ref>.supabase.co/functions/v1/daily-digest',
-       headers := jsonb_build_object('x-webhook-secret', '<FUNCTION_SECRET>')
+       headers := jsonb_build_object(
+         'x-webhook-secret', '<FUNCTION_SECRET>',
+         'apikey', '<anon-key>',
+         'Authorization', 'Bearer <anon-key>'
+       )
      )$$);
    ```
 5. Note down: Project URL, `anon` public key, `service_role` key (Settings → API).

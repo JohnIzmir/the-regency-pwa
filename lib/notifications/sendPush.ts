@@ -29,18 +29,30 @@ function functionsBaseUrl(): string | null {
 export async function triggerPushNotification(eventId: string, type: NotifyType): Promise<void> {
   const base = functionsBaseUrl();
   const secret = process.env.FUNCTION_SECRET;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!base || !secret) {
+  if (!base || !secret || !anonKey) {
     // Not configured yet (Edge Function/secrets not deployed) — skip
     // quietly rather than breaking event creation/editing.
-    console.warn('[send-push] Skipped: NEXT_PUBLIC_SUPABASE_URL or FUNCTION_SECRET not set.');
+    console.warn('[send-push] Skipped: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, or FUNCTION_SECRET not set.');
     return;
   }
 
   try {
     const res = await fetch(`${base}/send-push`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-webhook-secret': secret },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-webhook-secret': secret,
+        // Supabase's own gateway requires a valid Authorization header on
+        // every Edge Function call before the function's code even runs —
+        // separate from and in addition to the x-webhook-secret check
+        // inside send-push itself. The anon key satisfies the gateway;
+        // it's already public (shipped to every browser), so this isn't
+        // a new secret being exposed.
+        Authorization: `Bearer ${anonKey}`,
+        apikey: anonKey,
+      },
       body: JSON.stringify({ eventId, type }),
     });
     if (!res.ok) {
