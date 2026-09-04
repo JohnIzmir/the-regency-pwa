@@ -34,7 +34,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: { code: 'db_error', message: 'Could not save subscription.' } }, { status: 500 });
   }
 
-  await supabase.from('notification_preferences').update({ push_enabled: true }).eq('user_id', user.id);
+  // upsert (not update) so this still works even if a user's
+  // notification_preferences row is ever missing for some reason — a
+  // plain update would silently do nothing in that case, which is what
+  // was happening here before: the subscription saved fine, but
+  // push_enabled quietly never got flipped to true, so send-push found
+  // no eligible recipients even for genuinely subscribed users.
+  const { error: prefsError } = await supabase
+    .from('notification_preferences')
+    .upsert({ user_id: user.id, push_enabled: true }, { onConflict: 'user_id' });
+
+  if (prefsError) {
+    console.error('[push/subscribe] Could not enable push_enabled:', prefsError);
+    return NextResponse.json(
+      { error: { code: 'db_error', message: 'Subscription saved, but could not enable notifications. Try again.' } },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true });
 }
