@@ -5,6 +5,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { EventCard } from '@/components/entertainment/EventCard';
 import { GoogleMap } from '@/components/shared/GoogleMap';
 import { TrustBadges } from '@/components/shared/TrustBadges';
+import { getReviewUrl } from '@/lib/reviewUrl';
 
 const DAY_LABELS: Record<string, string> = {
   mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
@@ -69,7 +70,7 @@ export default async function HomePage() {
             {fullAddress}
           </p>
           <p className="max-w-xl text-lg text-pub-cream/90 drop-shadow">
-            Live bands, singers, karaoke, quiz nights, theme nights and sports screenings — Weston-super-Mare&apos;s
+            Live bands, singers, quiz nights, theme nights and sports screenings — Weston-super-Mare&apos;s
             home for a proper night out, every week.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -78,6 +79,14 @@ export default async function HomePage() {
             </Link>
             <a href={`tel:${venue?.phone ?? '01934633406'}`} className={buttonVariants({ variant: 'outline', size: 'lg' })}>
               Call us
+            </a>
+            <a
+              href={getReviewUrl(venue)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: 'ghost', size: 'lg' })}
+            >
+              Leave us a review
             </a>
           </div>
         </div>

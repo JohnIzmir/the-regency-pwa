@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Phone, MapPin, Star } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
+import { getReviewUrl } from '@/lib/reviewUrl';
 
 const DAY_LABELS: Record<string, string> = {
   mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
@@ -10,6 +11,7 @@ const DAY_LABELS: Record<string, string> = {
 export async function Footer() {
   const supabase = createClient();
   const { data: venue } = await supabase.from('venue_info').select('*').single();
+  const reviewUrl = getReviewUrl(venue);
 
   return (
     <footer className="mt-16 border-t border-pub-wood-light/30 bg-pub-surface pb-24 pt-12 sm:pb-12">
@@ -62,6 +64,15 @@ export async function Footer() {
             <Link href="/gallery" className="text-pub-muted hover:text-pub-gold">Gallery</Link>
             <Link href="/contact" className="text-pub-muted hover:text-pub-gold">Contact</Link>
           </nav>
+          <a
+            href={reviewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-pub-gold hover:underline"
+          >
+            <Star className="h-4 w-4 fill-pub-gold" />
+            Leave us a review
+          </a>
         </div>
       </div>
 

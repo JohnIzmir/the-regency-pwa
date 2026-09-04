@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://theregencyws.co.uk'),
   title: { default: 'The Regency | Live Entertainment, Weston-super-Mare', template: '%s | The Regency' },
   description:
-    'Live bands, singers, karaoke, quiz nights and sports screenings every week at The Regency, 22-24 Lower Church Road, Weston-super-Mare.',
+    'Live bands, singers, quiz nights and sports screenings every week at The Regency, 22-24 Lower Church Road, Weston-super-Mare.',
   manifest: '/manifest.json',
   openGraph: {
     type: 'website',

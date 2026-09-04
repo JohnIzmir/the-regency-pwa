@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'The Regency — Live Entertainment',
     short_name: 'The Regency',
-    description: 'Live bands, singers, karaoke, quiz nights and sports screenings at The Regency, Weston-super-Mare.',
+    description: 'Live bands, singers, quiz nights and sports screenings at The Regency, Weston-super-Mare.',
     start_url: '/',
     display: 'standalone',
     background_color: '#1c130d',

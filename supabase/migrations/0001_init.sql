@@ -43,7 +43,7 @@ create table venue_info (
   opening_hours jsonb not null default
     '{"mon":{"open":"11:00","close":"23:30"},"tue":{"open":"11:00","close":"23:30"},
       "wed":{"open":"11:00","close":"23:30"},"thu":{"open":"11:00","close":"23:30"},
-      "fri":{"open":"11:00","close":"23:30"},"sat":{"open":"11:00","close":"23:30"},
+      "fri":{"open":"11:00","close":"23:59"},"sat":{"open":"11:00","close":"23:59"},
       "sun":{"open":"11:00","close":"23:30"}}'::jsonb,
   facebook_url  text,
   instagram_url text,

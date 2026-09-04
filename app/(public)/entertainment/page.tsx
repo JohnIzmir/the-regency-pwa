@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'What’s On | The Regency',
-  description: 'Live bands, singers, karaoke, quiz nights, theme nights and sports screenings at The Regency.',
+  description: 'Live bands, singers, quiz nights, theme nights and sports screenings at The Regency.',
 };
 
 export const revalidate = 60;
