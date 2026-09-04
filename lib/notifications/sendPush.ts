@@ -18,8 +18,12 @@ export type NotifyType = 'new_event' | 'event_changed' | 'event_cancelled' | 'fe
 function functionsBaseUrl(): string | null {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!supabaseUrl) return null;
-  // https://<ref>.supabase.co -> https://<ref>.functions.supabase.co
-  return supabaseUrl.replace('.supabase.co', '.functions.supabase.co');
+  // https://<ref>.supabase.co -> https://<ref>.supabase.co/functions/v1
+  // (this is the URL Supabase's own dashboard shows for each deployed
+  // function — the <ref>.functions.supabase.co form used elsewhere in
+  // this project, e.g. the cron jobs in DEPLOYMENT.md, is a different,
+  // separate address and was silently failing here)
+  return `${supabaseUrl.replace(/\/$/, '')}/functions/v1`;
 }
 
 export async function triggerPushNotification(eventId: string, type: NotifyType): Promise<void> {

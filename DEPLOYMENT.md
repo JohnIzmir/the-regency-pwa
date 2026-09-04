@@ -14,12 +14,12 @@
    select cron.schedule('archive-expired-events', '0 3 * * *', $$select archive_expired_events()$$);
    select cron.schedule('weekly-monday-digest', '0 8 * * 1', $$
      select net.http_post(
-       url := 'https://<project-ref>.functions.supabase.co/weekly-digest',
+       url := 'https://<project-ref>.supabase.co/functions/v1/weekly-digest',
        headers := jsonb_build_object('x-webhook-secret', '<FUNCTION_SECRET>')
      )$$);
    select cron.schedule('daily-digest', '0 8 * * *', $$
      select net.http_post(
-       url := 'https://<project-ref>.functions.supabase.co/daily-digest',
+       url := 'https://<project-ref>.supabase.co/functions/v1/daily-digest',
        headers := jsonb_build_object('x-webhook-secret', '<FUNCTION_SECRET>')
      )$$);
    ```
